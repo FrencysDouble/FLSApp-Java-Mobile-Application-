@@ -27,4 +27,9 @@ public class MainActivity extends AppCompatActivity {
     {
         startActivity(log);
     }
+
+    public void Test(View view) {
+        Intent intent = new Intent(this,MainMenuActivity.class);
+        startActivity(intent);
+    }
 }
