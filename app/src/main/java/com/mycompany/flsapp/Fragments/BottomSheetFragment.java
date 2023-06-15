@@ -15,10 +15,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.mycompany.flsapp.R;
 
 public class BottomSheetFragment extends BottomSheetDialogFragment {
-SearchView searchView;
 
     public BottomSheetFragment() {
-        // Пустой конструктор обязателен
     }
 
     @NonNull
@@ -40,5 +38,7 @@ SearchView searchView;
 
         return view;
     }
+
+
 
 }
