@@ -6,10 +6,11 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.mycompany.flsapp.Fragments.Fragment_to;
+import com.mycompany.flsapp.Fragments.BottomSheetFragment;
 
 public class MainMenuActivity extends AppCompatActivity {
     EditText ed_to;
+    BottomSheetFragment bottomSheetFragment = new BottomSheetFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +24,6 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void openSearch1(View view) {
-        Fragment_to fragment_to = new Fragment_to();
-        fragment_to.show(getSupportFragmentManager(), "dialogFragment");
+        bottomSheetFragment.show(getSupportFragmentManager(), "dialogFragment");
     }
 }
