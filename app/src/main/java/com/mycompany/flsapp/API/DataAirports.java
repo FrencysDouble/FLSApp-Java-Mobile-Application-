@@ -7,8 +7,8 @@ import java.util.Map;
 public class DataAirports {
     private String code;
     @SerializedName("name")
-    private String name;
-    @SerializedName("iata_type")
+    private static String name;
+    @SerializedName("iata-type")
     private String iataType;
     private boolean flightable;
     private Coordinates coordinates;

@@ -1,12 +1,12 @@
 package com.mycompany.flsapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
@@ -40,9 +40,6 @@ public class RegistActivity extends AppCompatActivity {
         passTxt = findViewById(R.id.passTxt_on);
         root = findViewById(R.id.log_site_up);
 
-        mAuth = FirebaseAuth.getInstance();
-        db = FirebaseDatabase.getInstance();
-        users = db.getReference("Users");
         next = new Intent(this, MainMenuActivity.class);
     }
 
@@ -65,20 +62,29 @@ public class RegistActivity extends AppCompatActivity {
         }
         else
         {
-            mAuth.createUserWithEmailAndPassword(emailTxt.getText().toString(),passTxt.getText().toString())
-                    .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                        @Override
-                        public void onSuccess(AuthResult authResult) {
-                            User user = new User();
-                            user.setName(logTxt.getText().toString());
-                            user.setEmail(emailTxt.getText().toString());
-                            user.setPassword(passTxt.getText().toString());
-                            users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
-                                    .setValue(user);
-                            Snackbar.make(root,"Account is created",Snackbar.LENGTH_SHORT).show();
-                            startActivity(next);
-                        }
-                    });
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    mAuth = FirebaseAuth.getInstance();
+                    db = FirebaseDatabase.getInstance();
+                    users = db.getReference("Users");
+
+                    mAuth.createUserWithEmailAndPassword(emailTxt.getText().toString(), passTxt.getText().toString())
+                            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                @Override
+                                public void onSuccess(AuthResult authResult) {
+                                    User user = new User();
+                                    user.setName(logTxt.getText().toString());
+                                    user.setEmail(emailTxt.getText().toString());
+                                    user.setPassword(passTxt.getText().toString());
+                                    users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
+                                            .setValue(user);
+                                    Snackbar.make(root, "Account is created", Snackbar.LENGTH_SHORT).show();
+                                    startActivity(next);
+                                }
+                            });
+                }
+            });
         }
     }
 
