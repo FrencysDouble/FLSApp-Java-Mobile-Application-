@@ -20,14 +20,16 @@ import com.mycompany.flsapp.API.APIManager;
 import com.mycompany.flsapp.API.DataMerging;
 import com.mycompany.flsapp.Adapters.AirportAdapter;
 import com.mycompany.flsapp.Interfaces.DataCallback;
+import com.mycompany.flsapp.Interfaces.ItemClickListener;
 import com.mycompany.flsapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BottomSheetFragment extends BottomSheetDialogFragment implements DataCallback {
+public class BottomSheetFragment extends BottomSheetDialogFragment implements DataCallback, ItemClickListener {
     AirportAdapter airportAdapter;
     List<DataMerging.Data> dataList;
+    SearchView searchView;
     public BottomSheetFragment() {
     }
 
@@ -46,10 +48,11 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Da
     {
         View view = inflater.inflate(R.layout.bottom_sheet_fragment, container, false);
 
-        SearchView searchView = view.findViewById(R.id.searchView);
-        searchView.setFocusable(true);
+        searchView = view.findViewById(R.id.searchView);
+        searchView.setFocusable(false);
         searchView.setIconified(false);
-        airportAdapter = new AirportAdapter(new ArrayList());
+
+        airportAdapter = new AirportAdapter(new ArrayList(),this);
         APIManager apiManager = new APIManager();
         apiManager.GetCountryAndCitiesData(this);
 
@@ -57,10 +60,23 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Da
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         airportListRec.setLayoutManager(layoutManager);
-        airportListRec.setAdapter(airportAdapter);
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String Text) {
+                airportAdapter.filterData(Text);
+                return true;
+            }
+        });
+        airportListRec.setAdapter(airportAdapter);
         return view;
     }
+
 
     @Override
     public void onCountriesCityDataRecieved(List<DataMerging.Data> dataList) {
@@ -77,5 +93,12 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Da
     @Override
     public void onCountriesCityDataFailed(Throwable throwable) {
         Log.d("BottomSheetFragment", "API error: " + throwable.getMessage());
+    }
+
+    @Override
+    public void onItemClick(DataMerging.Data data) {
+        if (getActivity() instanceof ItemClickListener) {
+            ((ItemClickListener) getActivity()).onItemClick(data);
+        }
     }
 }

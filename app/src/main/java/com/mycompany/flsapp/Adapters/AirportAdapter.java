@@ -10,18 +10,23 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mycompany.flsapp.API.DataMerging;
+import com.mycompany.flsapp.Interfaces.ItemClickListener;
 import com.mycompany.flsapp.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AirportAdapter extends RecyclerView.Adapter<AirportAdapter.AirportViewHolder> {
 
     private List<DataMerging.Data> dataList;
+    private List<DataMerging.Data> filteredData = new ArrayList<>();
+    private ItemClickListener itemClickListener;
 
-    public AirportAdapter(List<DataMerging.Data> dataList) {
+    public AirportAdapter(List<DataMerging.Data> dataList, ItemClickListener itemClickListener) {
         this.dataList = dataList;
+        this.filteredData.addAll(dataList);
+        this.itemClickListener = itemClickListener;
     }
-
 
     @SuppressLint("NotifyDataSetChanged")
     public void SetData(List<DataMerging.Data> dataList)
@@ -39,9 +44,11 @@ public class AirportAdapter extends RecyclerView.Adapter<AirportAdapter.AirportV
 
     @Override
     public void onBindViewHolder(@NonNull AirportViewHolder holder, int position) {
-        DataMerging.Data data = dataList.get(position);
-        holder.tvAirportName.setText(data.getCityName());
-        holder.tvCountryName.setText(data.getCountryName());
+        if (position < filteredData.size()) {
+            DataMerging.Data data = filteredData.get(position);
+            holder.tvAirportName.setText(data.getCityName()) ;
+            holder.tvCountryName.setText(data.getCountryName());
+        }
     }
 
     @Override
@@ -49,16 +56,38 @@ public class AirportAdapter extends RecyclerView.Adapter<AirportAdapter.AirportV
         return dataList.size();
     }
 
+    public void filterData(String query) {
+        filteredData.clear();
+        for (DataMerging.Data data : dataList) {
+            if (data.getCityName() != null && data.getCityName().toLowerCase().contains(query.toLowerCase())) {
+                filteredData.add(data);
+            }
+        }
+        notifyDataSetChanged();
+    }
+
 
 
     public class AirportViewHolder extends RecyclerView.ViewHolder {
         public TextView tvAirportName;
         public TextView tvCountryName;
+        public View view;
 
         public AirportViewHolder(@NonNull View itemView) {
             super(itemView);
             tvAirportName = itemView.findViewById(R.id.txt_view_airport);
             tvCountryName = itemView.findViewById(R.id.txt_view_countries);
+            view = itemView.findViewById(R.id.view);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && itemClickListener != null) {
+                        DataMerging.Data data = filteredData.get(position);
+                        itemClickListener.onItemClick(data);
+                    }
+                }
+            });
         }
     }
 }
