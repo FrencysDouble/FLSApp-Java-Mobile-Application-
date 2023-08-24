@@ -1,27 +1,31 @@
 package com.mycompany.flsapp.API;
 
-import java.util.List;
+import com.mycompany.flsapp.Data.APIData.DataAirports;
+import com.mycompany.flsapp.Data.APIData.DataCities;
+import com.mycompany.flsapp.Data.APIData.DataCountries;
 
-import retrofit2.Call;
+import java.util.ArrayList;
+
+import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface APIService {
     @GET("airports.json")
-    Call<List<DataAirports>> getAirports(
+    Observable<ArrayList<DataAirports>> getAirports(
             @Query("locale") String locale,
             @Query("iata-type[]") String[] type,
             @Query("token") String apiKey
     );
 
     @GET("ru/countries.json")
-    Call<List<DataCountries>> getCountries(
+    Observable<ArrayList<DataCountries>> getCountries(
             @Query("locale") String locale,
             @Query("token") String apiKey
     );
 
     @GET("ru/cities.json")
-    Call<List<DataCities>> getCities(
+    Observable<ArrayList<DataCities>> getCities(
             @Query("locale") String locale,
             @Query("token") String apiKey
     );

@@ -1,106 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/clouds2"
     tools:context=".RegistActivity">
 
-    <View
-        android:id="@+id/clouds2_1"
-        android:layout_width="800dp"
-        android:layout_height="735dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/clouds2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="250dp"
+        android:layout_height="200dp"
+        android:layout_marginLeft="-60dp"
+        app:srcCompat="@drawable/air"
+        tools:ignore="MissingConstraints" />
 
     <View
         android:id="@+id/log_site_up"
         android:layout_width="386dp"
         android:layout_height="473dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/imageView4"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="44dp"
         android:background="@drawable/log_reg_site"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        android:padding="10dp" />
 
     <Button
         android:id="@+id/signin_btn"
         android:layout_width="136dp"
         android:layout_height="51dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginBottom="16dp"
+        android:layout_below="@+id/passTxt_on"
+        android:layout_marginTop="30dp"
+        android:layout_centerInParent="true"
         android:background="@drawable/custom_btn"
         android:onClick="createAccount"
         android:text="Sign up"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/passTxt_on"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="@+id/passTxt_on"
-        app:layout_constraintTop_toBottomOf="@+id/passTxt_on"
-        app:layout_constraintVertical_bias="0.142" />
+        android:textAllCaps="false" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="153dp"
         android:layout_height="65dp"
-        android:layout_marginTop="8dp"
+        android:layout_alignTop="@+id/log_site_up"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp"
         android:text="New Account"
         android:textColor="@android:color/darker_gray"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/log_site_up"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="@+id/log_site_up"
-        app:layout_constraintTop_toTopOf="@+id/log_site_up"
-        app:layout_constraintVertical_bias="0.098" />
+        android:textSize="24sp" />
 
     <TextView
         android:id="@+id/fls"
         android:layout_width="117dp"
         android:layout_height="66dp"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
+        android:layout_marginLeft="-45dp"
+        android:layout_marginTop="64dp"
+        android:layout_toRightOf="@+id/imageView4"
         android:fontFamily="sans-serif-light"
         android:gravity="top"
         android:text="@string/fls"
-        android:textAppearance="@style/fls"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView4"
-        app:layout_constraintVertical_bias="0.531" />
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="248dp"
-        android:layout_height="194dp"
-        android:layout_marginEnd="228dp"
-        android:layout_marginBottom="4dp"
-        app:layout_constraintBottom_toTopOf="@+id/log_site_up"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.92"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.531"
-        app:srcCompat="@drawable/air"
-        tools:ignore="MissingConstraints" />
+        android:textAppearance="@style/fls" />
 
     <EditText
         android:id="@+id/emailTxt_on"
         android:layout_width="250dp"
         android:layout_height="48dp"
-        android:layout_marginTop="24dp"
+        android:layout_below="@+id/loginTxt_on"
+        android:layout_marginTop="30dp"
+        android:layout_centerInParent="true"
         android:background="@drawable/custom_input_txt"
         android:drawableStart="@drawable/ic_email"
         android:ems="10"
@@ -108,19 +75,15 @@
         android:inputType="textEmailAddress"
         android:textColor="@android:color/darker_gray"
         android:textColorHint="@android:color/darker_gray"
-        app:layout_constraintBottom_toBottomOf="@+id/log_site_up"
-        app:layout_constraintEnd_toEndOf="@+id/loginTxt_on"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/loginTxt_on"
-        app:layout_constraintTop_toBottomOf="@+id/loginTxt_on"
-        app:layout_constraintVertical_bias="0.0"
         tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/loginTxt_on"
         android:layout_width="250dp"
         android:layout_height="48dp"
-        android:layout_marginTop="28dp"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
         android:background="@drawable/custom_input_txt"
         android:drawableStart="@drawable/ic_person"
         android:ems="10"
@@ -128,20 +91,15 @@
         android:inputType="textEmailAddress"
         android:textColor="@android:color/darker_gray"
         android:textColorHint="@android:color/darker_gray"
-        app:layout_constraintBottom_toBottomOf="@+id/log_site_up"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.035"
         tools:ignore="HardcodedText" />
 
     <EditText
         android:id="@+id/passTxt_on"
         android:layout_width="250dp"
         android:layout_height="48dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="108dp"
+        android:layout_below="@+id/emailTxt_on"
+        android:layout_marginTop="30dp"
+        android:layout_centerInParent="true"
         android:background="@drawable/custom_input_txt"
         android:drawableStart="@drawable/ic_lock"
         android:ems="10"
@@ -149,11 +107,6 @@
         android:inputType="textPassword"
         android:textColor="@android:color/darker_gray"
         android:textColorHint="@android:color/darker_gray"
-        app:layout_constraintBottom_toBottomOf="@+id/log_site_up"
-        app:layout_constraintEnd_toEndOf="@+id/emailTxt_on"
-        app:layout_constraintStart_toStartOf="@+id/emailTxt_on"
-        app:layout_constraintTop_toBottomOf="@+id/emailTxt_on"
-        app:layout_constraintVertical_bias="0.227"
         app:passwordToggleEnabled="true" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

@@ -1,4 +1,4 @@
-package com.mycompany.flsapp.Model;
+package com.mycompany.flsapp.Data;
 
 public class User {
     private String name,email,password;

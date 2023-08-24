@@ -1,35 +1,60 @@
 package com.mycompany.flsapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
-    private Intent reg;
-    private Intent log;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.mycompany.flsapp.ViewModel.MainViewModel;
+
+public class MainActivity extends AppCompatActivity
+{
+    private MainViewModel mainViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        reg  = new Intent(this,RegistActivity.class);
-        log = new Intent(this,LoginActivity.class);
+
+        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
+        mainViewModel.getNavigateToRegistration().observe(this,intent -> {
+            if(intent != null)
+            {
+                startActivity(new Intent(this,RegistActivity.class));
+            }
+        });
+
+        mainViewModel.getNavigateToLogin().observe(this,intent -> {
+            if(intent != null)
+            {
+                startActivity(new Intent(this,LoginActivity.class));
+            }
+        });
+
+        mainViewModel.getNavigateTest().observe(this,intent -> {
+            if(intent != null)
+            {
+                startActivity(new Intent(this,MainMenuActivity.class));
+            }
+        });
+
+
     }
 
     public void upBtn(View view)
     {
-        startActivity(reg);
+        mainViewModel.navigateToRegistration();
     }
 
     public void inBtn(View view)
     {
-        startActivity(log);
+        mainViewModel.navigateToLogin();
     }
 
     public void Test(View view) {
-        Intent intent = new Intent(this,MainMenuActivity.class);
-        startActivity(intent);
+        mainViewModel.navigateTest();
     }
 }

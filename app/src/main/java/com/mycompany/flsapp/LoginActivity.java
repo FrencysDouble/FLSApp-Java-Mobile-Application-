@@ -6,22 +6,16 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.mycompany.flsapp.ViewModel.LoginViewModel;
 
 public class LoginActivity extends AppCompatActivity {
 
-    protected FirebaseAuth mAuth;
-    protected FirebaseDatabase db;
-    protected DatabaseReference users;
+    private LoginViewModel loginViewModel;
+
     protected EditText emailTxt, passTxt;
     Intent next;
     View root;
@@ -31,10 +25,19 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         init();
+
+        loginViewModel = new ViewModelProvider(this).get(LoginViewModel.class);
+
+        loginViewModel.getLoginSuccess().observe(this, loginSuccess -> {
+            if (loginSuccess) {
+                startActivity(next);
+            } else {
+                Snackbar.make(root, "Wrong email or password", Snackbar.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void init() {
-
         emailTxt = findViewById(R.id.emailTxt_in);
         passTxt = findViewById(R.id.passTxt_in);
 
@@ -43,37 +46,16 @@ public class LoginActivity extends AppCompatActivity {
         root = findViewById(R.id.log_site_in);
     }
 
-
     public void loginAccount(View view) {
         if (TextUtils.isEmpty(emailTxt.getText().toString())) {
             Snackbar.make(root, "Enter your email", Snackbar.LENGTH_SHORT).show();
             return;
         }
         if (passTxt.getText().toString().length() < 5) {
-            Snackbar.make(root, "Password is less then 5 symbols", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(root, "Password is less than 5 symbols", Snackbar.LENGTH_SHORT).show();
             return;
         }
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                mAuth = FirebaseAuth.getInstance();
-                db = FirebaseDatabase.getInstance();
-                users = db.getReference("Users");
 
-                mAuth.signInWithEmailAndPassword(emailTxt.getText().toString(), passTxt.getText().toString())
-                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                            @Override
-                            public void onSuccess(AuthResult authResult) {
-                                startActivity(next);
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Snackbar.make(root, "Wrong email or password", Snackbar.LENGTH_SHORT).show();
-                    }
-                });
-
-            }
-        });
+        loginViewModel.login(emailTxt.getText().toString(), passTxt.getText().toString());
     }
 }

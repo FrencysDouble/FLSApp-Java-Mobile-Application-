@@ -1,4 +1,4 @@
-package com.mycompany.flsapp.API;
+package com.mycompany.flsapp.Data.APIData;
 
 import com.google.gson.annotations.SerializedName;
 

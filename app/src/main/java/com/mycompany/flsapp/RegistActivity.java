@@ -8,23 +8,14 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.mycompany.flsapp.Model.User;
-
-import java.util.Objects;
+import com.mycompany.flsapp.ViewModel.RegistViewModel;
 
 public class RegistActivity extends AppCompatActivity {
-    protected FirebaseAuth mAuth;
-    protected FirebaseDatabase db;
-    protected DatabaseReference users;
     protected EditText logTxt,emailTxt,passTxt;
     protected Intent next;
     protected View root;
+    private RegistViewModel registViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,44 +36,27 @@ public class RegistActivity extends AppCompatActivity {
 
 
     public void createAccount(View view) {
-        if(TextUtils.isEmpty(emailTxt.getText().toString()))
-        {
-            Snackbar.make(root, "Enter your email",Snackbar.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(emailTxt.getText().toString())) {
+            Snackbar.make(root, "Enter your email", Snackbar.LENGTH_SHORT).show();
             return;
         }
-        if(TextUtils.isEmpty(logTxt.getText().toString()))
-        {
-            Snackbar.make(root, "Enter your login",Snackbar.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(logTxt.getText().toString())) {
+            Snackbar.make(root, "Enter your login", Snackbar.LENGTH_SHORT).show();
             return;
         }
-        if(passTxt.getText().toString().length() < 5)
-        {
-            Snackbar.make(root, "Password is less then 5 symbols",Snackbar.LENGTH_SHORT).show();
+        if (passTxt.getText().toString().length() < 5) {
+            Snackbar.make(root, "Password is less then 5 symbols", Snackbar.LENGTH_SHORT).show();
             return;
-        }
-        else
-        {
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    mAuth = FirebaseAuth.getInstance();
-                    db = FirebaseDatabase.getInstance();
-                    users = db.getReference("Users");
-
-                    mAuth.createUserWithEmailAndPassword(emailTxt.getText().toString(), passTxt.getText().toString())
-                            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                                @Override
-                                public void onSuccess(AuthResult authResult) {
-                                    User user = new User();
-                                    user.setName(logTxt.getText().toString());
-                                    user.setEmail(emailTxt.getText().toString());
-                                    user.setPassword(passTxt.getText().toString());
-                                    users.child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
-                                            .setValue(user);
-                                    Snackbar.make(root, "Account is created", Snackbar.LENGTH_SHORT).show();
-                                    startActivity(next);
-                                }
-                            });
+        } else {
+            String email = emailTxt.getText().toString();
+            String password = passTxt.getText().toString();
+            String username = logTxt.getText().toString();
+            registViewModel.createUser(email, password, username).observe(this, registrationSuccess -> {
+                if (registrationSuccess) {
+                    Snackbar.make(root, "Account is created", Snackbar.LENGTH_SHORT).show();
+                    startActivity(next);
+                } else {
+                    Snackbar.make(root, "Failed to create account", Snackbar.LENGTH_SHORT).show();
                 }
             });
         }

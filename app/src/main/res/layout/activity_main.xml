@@ -1,98 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/clouds2"
     tools:context=".MainActivity">
-
-    <View
-        android:id="@+id/clouds2_1"
-        android:layout_width="800dp"
-        android:layout_height="735dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/clouds2"
-        app:layout_constraintBottom_toTopOf="@+id/StartMenu_up_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.007" />
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="248dp"
-        android:layout_height="194dp"
-        android:layout_marginEnd="220dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        android:layout_width="250dp"
+        android:layout_height="200dp"
+        android:layout_marginLeft="-60dp"
+        android:contentDescription="TODO"
         app:srcCompat="@drawable/air"
         tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/StartMenu_up_btn"
-        android:layout_width="224dp"
-        android:layout_height="51dp"
-        android:background="@drawable/custom_btn"
-        android:text="Sign up"
-        android:onClick="upBtn"
-        android:textAllCaps="false"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.707" />
-
-    <Button
-        android:id="@+id/StartMenu_in_btn"
-        android:layout_width="224dp"
-        android:layout_height="51dp"
-        android:background="@drawable/custom_btn"
-        android:text="Sign in"
-        android:onClick="inBtn"
-        android:textAllCaps="false"
-        app:backgroundTint="@null"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/StartMenu_up_btn"
-        app:layout_constraintVertical_bias="0.162"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/fls"
-        android:layout_width="117dp"
-        android:layout_height="66dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:fontFamily="sans-serif-light"
-        android:gravity="top"
-        android:text="@string/fls"
-        android:textAppearance="@style/fls"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.096" />
 
     <Button
         android:id="@+id/btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="48dp"
-        android:text="Button"
+        android:layout_below="@+id/imageView4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
         android:onClick="Test"
-        app:layout_constraintBottom_toTopOf="@+id/StartMenu_up_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fls"
-        app:layout_constraintVertical_bias="1.0" />
+        android:text="Button" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/fls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn"
+        android:layout_marginLeft="-45dp"
+        android:layout_marginBottom="67dp"
+        android:layout_toRightOf="@+id/imageView4"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/fls"
+        android:textAppearance="@style/fls" />
+
+    <Button
+        android:id="@+id/StartMenu_up_btn"
+        android:layout_width="224dp"
+        android:layout_height="51dp"
+        android:layout_below="@+id/StartMenu_in_btn"
+        android:layout_alignStart="@+id/StartMenu_in_btn"
+        android:layout_alignEnd="@+id/StartMenu_in_btn"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="98dp"
+        android:background="@drawable/custom_btn"
+        android:onClick="upBtn"
+        android:text="Sign up"
+        android:textAllCaps="false"
+        tools:ignore="HardcodedText,UsingOnClickInXml" />
+
+    <Button
+        android:id="@+id/StartMenu_in_btn"
+        android:layout_width="224dp"
+        android:layout_height="51dp"
+        android:layout_below="@+id/btn"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/custom_btn"
+        android:gravity="center"
+        android:onClick="inBtn"
+        android:text="Sign in"
+        android:textAllCaps="false"
+        tools:ignore="HardcodedText,MissingConstraints,UsingOnClickInXml" />
+
+</RelativeLayout>

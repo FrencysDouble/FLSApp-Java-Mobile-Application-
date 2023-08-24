@@ -9,6 +9,23 @@
 
 
     <View
+        android:id="@+id/calendar_button"
+        android:layout_width="121dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/choose_menu"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/ripple_animation"
+        android:onClick="OpenCalendar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rectangle_1"
+        app:layout_constraintVertical_bias="0.007"
+        tools:targetApi="m" />
+
+    <View
         android:id="@+id/rectangle_1"
         android:layout_width="330dp"
         android:layout_height="99dp"
@@ -56,7 +73,8 @@
         android:id="@+id/txtCityOut"
         android:layout_width="302dp"
         android:layout_height="25dp"
-        android:text="TextView"
+        android:hint="Откуда"
+        android:textColorHint="@android:color/darker_gray"
         android:textColor="@android:color/darker_gray"
         app:layout_constraintBottom_toTopOf="@+id/line_2"
         app:layout_constraintEnd_toEndOf="@+id/view"
@@ -83,11 +101,23 @@
         android:id="@+id/txtCityIn"
         android:layout_width="302dp"
         android:layout_height="25dp"
-        android:text="TextView"
+        android:hint="Куда"
+        android:textColorHint="@android:color/darker_gray"
         android:textColor="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="@+id/rectangle_1"
         app:layout_constraintEnd_toEndOf="@+id/view2"
         app:layout_constraintStart_toStartOf="@+id/view2"
         app:layout_constraintTop_toBottomOf="@+id/line_2" />
+
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

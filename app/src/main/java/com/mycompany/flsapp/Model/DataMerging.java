@@ -1,33 +1,22 @@
-package com.mycompany.flsapp.API;
+package com.mycompany.flsapp.Model;
 
 import android.util.Log;
 
-import com.mycompany.flsapp.Interfaces.DataCallback;
+import com.mycompany.flsapp.Data.APIData.DataCities;
+import com.mycompany.flsapp.Data.APIData.DataCountries;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class DataMerging{
-    protected List<DataCountries> countriesList;
-    protected List<DataCities> citiesList;
-    protected List<Data> dataList = new ArrayList<>();
-
+public class DataMerging
+{
     public DataMerging()
     {
 
     }
 
-    public void CountriesSet(List<DataCountries> countriesList)
+    public static ArrayList<DataMerging.Data> mergeData(ArrayList<DataCountries> countriesList, ArrayList<DataCities> citiesList)
     {
-        this.countriesList = countriesList;
-    }
-    public void CitiesSet(List<DataCities> citiesList)
-    {
-        this.citiesList = citiesList;
-    }
-
-    public void Merging(DataCallback callback)
-    {
+        ArrayList<Data> dataList = new ArrayList<>();
         if (countriesList != null && citiesList != null)
         {
             for(DataCountries dataCountries : countriesList)
@@ -46,11 +35,11 @@ public class DataMerging{
             }
         }
         Log.d("DataMerging", "Received Merging data: " + dataList.toString());
-        callback.onCountriesCityDataRecieved(dataList);
+        return dataList;
     }
 
 
-    public class Data
+    public static class Data
     {
         String code;
         String countryName;

@@ -3,7 +3,6 @@ package com.mycompany.flsapp.Fragments;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,28 +10,25 @@ import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.mycompany.flsapp.API.APIManager;
-import com.mycompany.flsapp.API.DataMerging;
+import com.mycompany.flsapp.Model.DataMerging;
 import com.mycompany.flsapp.Adapters.AirportAdapter;
-import com.mycompany.flsapp.Interfaces.DataCallback;
 import com.mycompany.flsapp.Interfaces.ItemClickListener;
 import com.mycompany.flsapp.R;
+import com.mycompany.flsapp.ViewModel.FragmentsViewModel.CitAndCountSelViewModel;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
-public class BottomSheetFragment extends BottomSheetDialogFragment implements DataCallback, ItemClickListener {
+public class CitiesAndCountSel extends BottomSheetDialogFragment implements ItemClickListener {
     AirportAdapter airportAdapter;
-    List<DataMerging.Data> dataList;
     SearchView searchView;
-    public BottomSheetFragment() {
-    }
-
+    CitAndCountSelViewModel citiesAndCountSelVM;
 
     @NonNull
     @Override
@@ -47,19 +43,28 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Da
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.bottom_sheet_fragment, container, false);
+        citiesAndCountSelVM = new ViewModelProvider(this).get(CitAndCountSelViewModel.class);
 
+        RecyclerView airportListRec = view.findViewById(R.id.airportList);
         searchView = view.findViewById(R.id.searchView);
         searchView.setFocusable(false);
         searchView.setIconified(false);
 
-        airportAdapter = new AirportAdapter(new ArrayList(),this);
-        APIManager apiManager = new APIManager();
-        apiManager.GetCountryAndCitiesData(this);
-
-        RecyclerView airportListRec = view.findViewById(R.id.airportList);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         airportListRec.setLayoutManager(layoutManager);
+
+        airportAdapter = new AirportAdapter(new ArrayList<>(), this);
+        airportListRec.setAdapter(airportAdapter);
+
+
+        citiesAndCountSelVM.getDataListLiveData().observe(this, newDataList -> {
+            airportAdapter.SetData(newDataList);
+        });
+        try {
+            citiesAndCountSelVM.loadData();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -77,23 +82,6 @@ public class BottomSheetFragment extends BottomSheetDialogFragment implements Da
         return view;
     }
 
-
-    @Override
-    public void onCountriesCityDataRecieved(List<DataMerging.Data> dataList) {
-        this.dataList = dataList;
-        Log.d("BottomSheetFragment", "Received Merging data: " + dataList.toString());
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                airportAdapter.SetData(dataList);
-            }
-        });
-    }
-
-    @Override
-    public void onCountriesCityDataFailed(Throwable throwable) {
-        Log.d("BottomSheetFragment", "API error: " + throwable.getMessage());
-    }
 
     @Override
     public void onItemClick(DataMerging.Data data) {

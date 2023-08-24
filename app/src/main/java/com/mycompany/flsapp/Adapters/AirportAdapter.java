@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mycompany.flsapp.API.DataMerging;
+import com.mycompany.flsapp.Model.DataMerging;
 import com.mycompany.flsapp.Interfaces.ItemClickListener;
 import com.mycompany.flsapp.R;
 
@@ -20,7 +20,7 @@ public class AirportAdapter extends RecyclerView.Adapter<AirportAdapter.AirportV
 
     private List<DataMerging.Data> dataList;
     private List<DataMerging.Data> filteredData = new ArrayList<>();
-    private ItemClickListener itemClickListener;
+    private final ItemClickListener itemClickListener;
 
     public AirportAdapter(List<DataMerging.Data> dataList, ItemClickListener itemClickListener) {
         this.dataList = dataList;
@@ -46,21 +46,28 @@ public class AirportAdapter extends RecyclerView.Adapter<AirportAdapter.AirportV
     public void onBindViewHolder(@NonNull AirportViewHolder holder, int position) {
         if (position < filteredData.size()) {
             DataMerging.Data data = filteredData.get(position);
-            holder.tvAirportName.setText(data.getCityName()) ;
-            holder.tvCountryName.setText(data.getCountryName());
+            holder.bindData(data);
         }
     }
 
     @Override
     public int getItemCount() {
-        return dataList.size();
+        return filteredData.size();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void filterData(String query) {
         filteredData.clear();
-        for (DataMerging.Data data : dataList) {
-            if (data.getCityName() != null && data.getCityName().toLowerCase().contains(query.toLowerCase())) {
-                filteredData.add(data);
+        if (query.isEmpty()) {
+            filteredData.addAll(dataList);
+            notifyDataSetChanged();
+        } else {
+            for (DataMerging.Data data : dataList) {
+                if (data.getCityName() != null && data.getCityName().toLowerCase().contains(query.toLowerCase())) {
+                    if (!filteredData.contains(data)) {
+                        filteredData.add(data);
+                    }
+                }
             }
         }
         notifyDataSetChanged();
@@ -88,6 +95,10 @@ public class AirportAdapter extends RecyclerView.Adapter<AirportAdapter.AirportV
                     }
                 }
             });
+        }
+        public void bindData(DataMerging.Data data) {
+            tvAirportName.setText(data.getCityName());
+            tvCountryName.setText(data.getCountryName());
         }
     }
 }
