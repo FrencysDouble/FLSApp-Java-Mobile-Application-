@@ -6,6 +6,33 @@ public class CalendarData {
     String year;
     String month;
     ArrayList<String> dayDataList;
+    int firstSelPos = -1; // Первая выбранная позиция
+    int secSelPos = -1;  // Вторая выбранная позиция
+    ArrayList<Integer> positions = new ArrayList<>();
+
+    public int getFirstSelPos() {
+        return firstSelPos;
+    }
+
+    public void setFirstSelPos(int firstSelPos) {
+        this.firstSelPos = firstSelPos;
+    }
+
+    public int getSecSelPos() {
+        return secSelPos;
+    }
+
+    public void setSecSelPos(int secSelPos) {
+        this.secSelPos = secSelPos;
+    }
+
+    public ArrayList<Integer> getPositions() {
+        return positions;
+    }
+
+    public void setPositions(ArrayList<Integer> positions) {
+        this.positions = positions;
+    }
 
     public int getFirstDayOfWeek() {
         return firstDayOfWeek;
