@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -21,6 +22,8 @@ public class CalendarFragment extends Fragment {
 
     CalendarViewModel calendarViewModel = new CalendarViewModel();
     CalendarAdapter calendarAdapter;
+    TextView txtFD;
+    TextView txtSD;
 
     public CalendarFragment() {
     }
@@ -32,6 +35,8 @@ public class CalendarFragment extends Fragment {
 
        View rootView =  inflater.inflate(R.layout.calendar_fragment, container, false);
        View rootView2 = inflater.inflate(R.layout.calendar_item,container,false);
+       txtFD = rootView.findViewById(R.id.txt_first_date);
+       txtSD = rootView.findViewById(R.id.txt_sec_date);
 
         RecyclerView.RecycledViewPool sharedViewPool = new RecyclerView.RecycledViewPool();
 
@@ -47,12 +52,13 @@ public class CalendarFragment extends Fragment {
 
         calendarViewModel = new ViewModelProvider(this).get(CalendarViewModel.class);
 
-        calendarAdapter = new CalendarAdapter(new ArrayList<>());
+        calendarAdapter = new CalendarAdapter(new ArrayList<>(),calendarViewModel);
         monthYearRecyclerView.setAdapter(calendarAdapter);
 
         calendarViewModel.getCalendarList().observe(getViewLifecycleOwner(), newDataList ->{
             calendarAdapter.setDataCalendar(newDataList);
         });
+
 
         calendarViewModel.loadData();
         return rootView;

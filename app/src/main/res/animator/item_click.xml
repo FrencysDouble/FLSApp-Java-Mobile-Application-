@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Состояние выбрано -->
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#0077FF" /> <!-- Цвет фона при выборе -->
+            <corners android:radius="8dp" /> <!-- Радиус закругления углов -->
+        </shape>
+        <color android:color="#FFFFFF" /> <!-- Цвет текста при выборе -->
+    </item>
+    <!-- Состояние не выбрано -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#EDEDED" /> <!-- Цвет фона в обычном состоянии -->
+            <corners android:radius="8dp" /> <!-- Радиус закругления углов -->
+        </shape>
+        <color android:color="#000000" /> <!-- Цвет текста в обычном состоянии -->
+    </item>
+</selector>

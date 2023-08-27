@@ -1,7 +1,5 @@
 package com.mycompany.flsapp.Model;
 
-import android.util.Log;
-
 import com.mycompany.flsapp.Data.CalendarData;
 
 import java.text.SimpleDateFormat;
@@ -45,7 +43,6 @@ public class CalendarModel {
             data.setDayDataList(dayDataList);
             data.setFirstDayOfWeek(firstDayOfWeek);
             calendarData.add(data);
-            Log.d("CalendarModel","First Day of week" + data.getFirstDayOfWeek());
 
             // Переходим к следующему месяцу
             calendar.add(Calendar.MONTH, 1);

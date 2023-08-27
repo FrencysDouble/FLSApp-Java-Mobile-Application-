@@ -8,7 +8,7 @@ public class CalendarData {
     ArrayList<String> dayDataList;
     int firstSelPos = -1; // Первая выбранная позиция
     int secSelPos = -1;  // Вторая выбранная позиция
-    ArrayList<Integer> positions = new ArrayList<>();
+    ArrayList<DataPositions> positions = new ArrayList<>();
 
     public int getFirstSelPos() {
         return firstSelPos;
@@ -26,11 +26,11 @@ public class CalendarData {
         this.secSelPos = secSelPos;
     }
 
-    public ArrayList<Integer> getPositions() {
+    public ArrayList<DataPositions> getPositions() {
         return positions;
     }
 
-    public void setPositions(ArrayList<Integer> positions) {
+    public void setPositions(ArrayList<DataPositions> positions) {
         this.positions = positions;
     }
 

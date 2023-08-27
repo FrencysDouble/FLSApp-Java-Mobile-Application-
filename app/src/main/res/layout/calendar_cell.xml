@@ -7,9 +7,10 @@
 
     <TextView
         android:id="@+id/cellDayText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="55dp"
+        android:layout_height="45dp"
         android:layout_centerInParent="true"
+        android:gravity="center"
         android:textColor="@color/black"
         android:textSize="20sp" />
 </RelativeLayout>

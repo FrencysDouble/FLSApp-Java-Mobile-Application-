@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mycompany.flsapp.Data.CalendarData;
+import com.mycompany.flsapp.Data.DataPositions;
 import com.mycompany.flsapp.R;
 import com.mycompany.flsapp.ViewModel.FragmentsViewModel.CalendarViewModel;
 
@@ -73,9 +74,13 @@ public class DayAdapter extends RecyclerView.Adapter<DayViewHolder>{
             ArrayList<CalendarData> calendarDataList = calendarViewModel.getCalendarList().getValue();
             if (calendarDataList != null && monthPosition >= 0 && monthPosition < calendarDataList.size()) {
                 CalendarData currentMonthCalendar = calendarDataList.get(monthPosition);
-                if (currentMonthCalendar.getPositions().contains(position))
-                {
-                    return ContextCompat.getColor(context, R.color.selectedColorL);
+
+                ArrayList<DataPositions> dataPositionsList = currentMonthCalendar.getPositions();
+
+                for (DataPositions dataPositions : dataPositionsList) {
+                    if (dataPositions.getPositions().contains(position)) {
+                        return ContextCompat.getColor(context, R.color.selectedColorL);
+                    }
                 }
             }
         }

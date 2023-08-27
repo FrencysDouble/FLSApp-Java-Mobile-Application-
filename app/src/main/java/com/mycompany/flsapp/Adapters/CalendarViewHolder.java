@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mycompany.flsapp.R;
+import com.mycompany.flsapp.ViewModel.FragmentsViewModel.CalendarViewModel;
 
 import java.util.ArrayList;
 
@@ -25,17 +26,15 @@ public class CalendarViewHolder extends RecyclerView.ViewHolder {
 
         //LinearLayoutManager layoutManager = new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false);
 
-        // Используйте GridLayout для отображения календаря
         GridLayoutManager layoutManager = new GridLayoutManager(itemView.getContext(), 7);
         dayRecyclerView.setLayoutManager(layoutManager);
-        dayAdapter = new DayAdapter(new ArrayList<>(), 0);
     }
 
 
-    public void bindMonthYear(String month, String year, int firstDataMonth ,ArrayList<String> dayDataList) {
+    public void bindMonthYear(String month, String year, int firstDataMonth , ArrayList<String> dayDataList, CalendarViewModel calendarViewModel,int position) {
         txt_year.setText(year);
         txt_month.setText(month);
-        dayAdapter.updateData(dayDataList, firstDataMonth);
+        dayAdapter = new DayAdapter(dayDataList,firstDataMonth,calendarViewModel,position);
         dayRecyclerView.setAdapter(dayAdapter);
 
 
