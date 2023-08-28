@@ -21,4 +21,5 @@ public class DataPositions {
     public void setMonthPositions(int monthPositions) {
         this.monthPositions = monthPositions;
     }
+
 }

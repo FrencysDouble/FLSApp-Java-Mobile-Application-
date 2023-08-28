@@ -66,21 +66,24 @@ public class DayAdapter extends RecyclerView.Adapter<DayViewHolder>{
     }
 
     private int getBackgroundColor(int position) {
+        int backgroundColor = ContextCompat.getColor(context, R.color.defaultColor);
+
         if (calendarViewModel != null) {
             ArrayList<CalendarData> calendarDataList = calendarViewModel.getCalendarList().getValue();
             if (calendarDataList != null) {
                 for (CalendarData calendarData : calendarDataList) {
                     ArrayList<DataPositions> dataPositionsList = calendarData.getPositions();
-                    Log.d("GetBackColor","Calendar"+ calendarData.getPositions().toString());
                     for (DataPositions dataPositions : dataPositionsList) {
                         if (dataPositions.getMonthPositions() == monthPosition && dataPositions.getPositions().contains(position)) {
-                            return ContextCompat.getColor(context, R.color.selectedColorL);
+                            backgroundColor = ContextCompat.getColor(context, R.color.selectedColorL);
+                            // Если найдено совпадение, мы устанавливаем цвет и выходим из цикла
+                            break;
                         }
                     }
                 }
             }
         }
-        return ContextCompat.getColor(context, R.color.defaultColor);
+        return backgroundColor;
     }
 
 
