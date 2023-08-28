@@ -67,4 +67,5 @@ public class CalendarData {
     public void setDayDataList(ArrayList<String> dayDataList) {
         this.dayDataList = dayDataList;
     }
+
 }

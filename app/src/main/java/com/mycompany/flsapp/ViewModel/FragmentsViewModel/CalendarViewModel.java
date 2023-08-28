@@ -22,6 +22,7 @@ public class CalendarViewModel extends ViewModel {
     private final CompositeDisposable disposables = new CompositeDisposable();
     private int monthPositionF;
     private int monthPositionS;
+    CalendarData calendarData = new CalendarData();
 
     public MutableLiveData<ArrayList<CalendarData>> getCalendarList() {
         return calendarListLiveData;
@@ -40,7 +41,7 @@ public class CalendarViewModel extends ViewModel {
     public void toggleDaySelection(int monthPosition,int position) {
         ArrayList<CalendarData> calendarDataList = calendarListLiveData.getValue();
         if (calendarDataList != null && !calendarDataList.isEmpty()) {
-            CalendarData calendarData = calendarDataList.get(monthPosition);
+  //          CalendarData calendarData = calendarDataList.get(monthPosition);
 
             // Если ни один день не выбран, выберите первый день
             if (calendarData.getFirstSelPos() == -1 && calendarData.getSecSelPos() == -1) {
@@ -56,6 +57,8 @@ public class CalendarViewModel extends ViewModel {
             } else if (calendarData.getFirstSelPos() != -1 && calendarData.getSecSelPos() != -1) {
                 calendarData.setFirstSelPos(position);
                 calendarData.setSecSelPos(-1);
+                this.monthPositionF = monthPosition;
+                this.monthPositionS = -1;
             }
 
             // После каждого изменения выбора, обновите список выбранных дней
@@ -71,6 +74,7 @@ public class CalendarViewModel extends ViewModel {
 
         int firstSelPos = calendarData.getFirstSelPos();
         int secSelPos = calendarData.getSecSelPos();
+        Log.d("SelectedDay","firstsel = " + firstSelPos + " SecSel = " + secSelPos);
 
         if (monthPositionF == monthPositionS) {
             Log.d("Obichnii","F = " + monthPositionF +"S = " + monthPositionS);
@@ -89,29 +93,33 @@ public class CalendarViewModel extends ViewModel {
             dataPositions.setMonthPositions(monthPositionS);
             dataPositions.setPositions(positions);
             dataPositionsList.add(dataPositions);
+            calendarData.setPositions(dataPositionsList);
+            Log.d("Obichnii", "EndList = " + dataPositionsList);
         }
 
         else {
-            Log.d("NEObichnii","F = " + monthPositionF + "S = " + monthPositionS);
             for (int i = monthPositionF; i <= monthPositionS; i++) {
+                Log.d("Neobichnii","FSP = " + firstSelPos + "SSP = " + secSelPos);
                 CalendarData currentMonthCalendar = calendarListLiveData.getValue().get(i);
                 DataPositions dataPositions = new DataPositions();
                 ArrayList<Integer> positions = new ArrayList<>();
-                dataPositions.setMonthPositions(i);
 
                 if (i == monthPositionF) {
                     // Если мы находимся в первом месяце, начнем с firstSelPos
-                    for (int j = firstSelPos; j < currentMonthCalendar.getDayDataList().size(); j++) {
+                    for (int j = firstSelPos; j <= currentMonthCalendar.getDayDataList().size(); j++) {
+                        Log.d("Neobichnii","First = " + j);
                         positions.add(j);
                     }
                 } else if (i == monthPositionS) {
                     // Если мы находимся в последнем месяце, закончим на secSelPos
                     for (int j = 0; j <= secSelPos; j++) {
+                        Log.d("Neobichnii","Sec = " + j);
                         positions.add(j);
                     }
                 } else {
                     // Если мы находимся в промежуточных месяцах, добавим все дни
-                    for (int j = 0; j < currentMonthCalendar.getDayDataList().size(); j++) {
+                    for (int j = 0; j <= currentMonthCalendar.getDayDataList().size(); j++) {
+                        Log.d("Neobichnii","Third = " + j);
                         positions.add(j);
                     }
                 }
@@ -119,8 +127,10 @@ public class CalendarViewModel extends ViewModel {
                 dataPositions.setMonthPositions(i);
                 dataPositions.setPositions(positions);
                 dataPositionsList.add(dataPositions);
+                Log.d("NEObichnii","End");
             }
             calendarData.setPositions(dataPositionsList);
+            Log.d("Neobichnii", "EndList = " + dataPositionsList);
         }
     }
 

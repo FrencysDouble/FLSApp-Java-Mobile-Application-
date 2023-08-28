@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class CalendarFragment extends Fragment {
 
-    CalendarViewModel calendarViewModel = new CalendarViewModel();
+    CalendarViewModel calendarViewModel;
     CalendarAdapter calendarAdapter;
     TextView txtFD;
     TextView txtSD;

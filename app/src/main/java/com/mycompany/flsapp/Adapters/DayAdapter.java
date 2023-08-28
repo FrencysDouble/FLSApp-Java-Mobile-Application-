@@ -16,16 +16,12 @@ import com.mycompany.flsapp.R;
 import com.mycompany.flsapp.ViewModel.FragmentsViewModel.CalendarViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class DayAdapter extends RecyclerView.Adapter<DayViewHolder>{
 
     private final ArrayList<String> dayDataList;
     int firstDayMonth;
     CalendarViewModel calendarViewModel;
-    private List<Integer> selectedItems = new ArrayList<>();
-    private int firstSelectedPosition = -1;
-    private int secondSelectedPosition = -1;
     private int monthPosition;
     Context context;
 
@@ -72,14 +68,14 @@ public class DayAdapter extends RecyclerView.Adapter<DayViewHolder>{
     private int getBackgroundColor(int position) {
         if (calendarViewModel != null) {
             ArrayList<CalendarData> calendarDataList = calendarViewModel.getCalendarList().getValue();
-            if (calendarDataList != null && monthPosition >= 0 && monthPosition < calendarDataList.size()) {
-                CalendarData currentMonthCalendar = calendarDataList.get(monthPosition);
-
-                ArrayList<DataPositions> dataPositionsList = currentMonthCalendar.getPositions();
-
-                for (DataPositions dataPositions : dataPositionsList) {
-                    if (dataPositions.getPositions().contains(position)) {
-                        return ContextCompat.getColor(context, R.color.selectedColorL);
+            if (calendarDataList != null) {
+                for (CalendarData calendarData : calendarDataList) {
+                    ArrayList<DataPositions> dataPositionsList = calendarData.getPositions();
+                    Log.d("GetBackColor","Calendar"+ calendarData.getPositions().toString());
+                    for (DataPositions dataPositions : dataPositionsList) {
+                        if (dataPositions.getMonthPositions() == monthPosition && dataPositions.getPositions().contains(position)) {
+                            return ContextCompat.getColor(context, R.color.selectedColorL);
+                        }
                     }
                 }
             }
