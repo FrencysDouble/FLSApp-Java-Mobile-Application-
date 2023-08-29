@@ -61,6 +61,8 @@ public class CalendarViewModel extends ViewModel {
                 firstSecPosData.setSecSelPos(-1);
                 this.monthPositionF = monthPosition;
                 this.monthPositionS = -1;
+
+                clearSelectedPositions(calendarDataList);
             }
 
             // После каждого изменения выбора, обновите список выбранных дней
@@ -83,9 +85,10 @@ public class CalendarViewModel extends ViewModel {
             Log.d("Obichnii","F = " + monthPositionF +"S = " + monthPositionS);
             ArrayList<Integer> positions = new ArrayList<>();
 
-            if (secSelPos == -1 && firstSelPos != -1) {
-                positions.add(firstSelPos);
-            } else if (secSelPos != -1 && firstSelPos != -1) {
+           if (secSelPos == -1 && firstSelPos != -1) {
+               positions.add(firstSelPos);
+           }
+             else if (secSelPos != -1 && firstSelPos != -1) {
                 int min = Math.min(firstSelPos, secSelPos);
                 int max = Math.max(firstSelPos, secSelPos);
                 for (int j = min; j <= max; j++) {
@@ -133,6 +136,15 @@ public class CalendarViewModel extends ViewModel {
             }
             calendarData.setPositions(dataPositionsList);
             Log.d("Neobichnii", "EndList = " + dataPositionsList);
+        }
+    }
+
+    private void clearSelectedPositions(ArrayList<CalendarData> calendarDataList) {
+        for (CalendarData calendarData : calendarDataList) {
+            ArrayList<DataPositions> dataPositionsList = calendarData.getPositions();
+            for (DataPositions dataPositions : dataPositionsList) {
+                dataPositions.getPositions().clear();
+            }
         }
     }
 

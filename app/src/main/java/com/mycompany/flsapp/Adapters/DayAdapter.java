@@ -74,10 +74,12 @@ public class DayAdapter extends RecyclerView.Adapter<DayViewHolder>{
                 for (CalendarData calendarData : calendarDataList) {
                     ArrayList<DataPositions> dataPositionsList = calendarData.getPositions();
                     for (DataPositions dataPositions : dataPositionsList) {
-                        if (dataPositions.getMonthPositions() == monthPosition && dataPositions.getPositions().contains(position)) {
-                            backgroundColor = ContextCompat.getColor(context, R.color.selectedColorL);
-                            // Если найдено совпадение, мы устанавливаем цвет и выходим из цикла
-                            break;
+                        if (dataPositions.getMonthPositions() == monthPosition) {
+                            if (dataPositions.getPositions().contains(position)) {
+                                backgroundColor = ContextCompat.getColor(context, R.color.selectedColorL);
+                                // Если найдено совпадение, мы устанавливаем цвет и выходим из цикла
+                                return backgroundColor;
+                            }
                         }
                     }
                 }
